@@ -1,5 +1,7 @@
+#include <iostream>
 #include "Player.h"
 #include "Constants.h"
+
 
 using namespace std;
 
@@ -9,6 +11,7 @@ Player::Player() {
     xpos = 0;
     ypos = 0;
     speed = 10;
+    onGround = false;
 }
 void Player::update(bool playerUp, bool playerDown, bool playerLeft, bool playerRight) {
     if(playerUp) {
@@ -33,11 +36,18 @@ void Player::update(bool playerUp, bool playerDown, bool playerLeft, bool player
     if((playerRight & playerLeft) | (!playerRight & !playerLeft)) {
         xvel = 0;
     }
-
+    if(onGround) {
+        yvel = 0;
+        if(playerUp) {
+            yvel = -speed;
+        }
+    }
 
     xpos += xvel;
     ypos += yvel;
     Player::checkCollision();
+
+
 
 }
 void Player::checkCollision() {
@@ -45,8 +55,13 @@ void Player::checkCollision() {
         xpos -= xvel;
         xvel = 0;
     }
-    if((ypos >= WINDOW_HEIGHT) | (ypos <= 0)) {
+    if((ypos <= 0)) {
         ypos -= yvel;
         yvel = 0;
+    }
+    if(ypos >= GROUND_HEIGHT) {
+        onGround = true;
+    } else if(ypos < GROUND_HEIGHT) {
+        onGround = false;
     }
 }

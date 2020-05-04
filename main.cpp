@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <iostream>
 #include "Player.h"
 #include "Constants.h"
@@ -8,11 +9,15 @@ using namespace std;
 
 int main() {
     // Create the main window
-    sf::RenderWindow app(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SFML window");
+    sf::RenderWindow app(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Coup de Grace");
     app.setFramerateLimit(45);
 
     bool p1up, p1down, p1left, p1right = false;
     bool p2up, p2down, p2left, p2right = false;
+    bool start = false;
+    bool firstEnterPress = true;
+    sf::Clock clock;
+
 
     Player p1;
     Player p2;
@@ -21,13 +26,15 @@ int main() {
     agencyFont.loadFromFile("data/fonts/AGENCYB.TTF");
 
     sf::Text timerText("timer", agencyFont, 50);
+    sf::Text startText("Press Enter to Start", agencyFont, 50);
+    startText.setPosition(WINDOW_WIDTH/3, WINDOW_HEIGHT/2);
 
-    // initialize positions;
-    // p1 at bottom left, p2 at bottom right
-//    p1.xpos = 0;
-//    p1.ypos = windowHeight;
-//    p2.xpos = windowWidth;
-//    p2.ypos = windowHeight;
+//     initialize positions;
+//     p1 at bottom left, p2 at bottom right
+    p1.xpos = 0;
+    p1.ypos = GROUND_HEIGHT;
+    p2.xpos = WINDOW_WIDTH-50;
+    p2.ypos = GROUND_HEIGHT;
 
     // Load a sprite to display
     sf::Texture p1Texture;
@@ -40,6 +47,9 @@ int main() {
         return EXIT_FAILURE;
     sf::Sprite p2Sprite(p2Texture);
 
+    p1Sprite.setPosition(p1.xpos, p1.ypos);
+    p2Sprite.setPosition(p2.xpos, p2.ypos);
+
     // Start the game loop
     while (app.isOpen()) {
         // Process events
@@ -50,6 +60,14 @@ int main() {
                 app.close();
         }
 
+        if(start == true) {
+
+            sf::Time t = clock.getElapsedTime();
+            string time = to_string(t.asSeconds());
+            timerText.setString(time);
+        }
+
+
 
         // Clear screen
         app.clear();
@@ -58,10 +76,20 @@ int main() {
         app.draw(p1Sprite);
         app.draw(p2Sprite);
         app.draw(timerText);
+        if(!start) {
+            app.draw(startText);
+        }
 
         p1Sprite.move(sf::Vector2f(p1.xvel, p1.yvel));
         p2Sprite.move(sf::Vector2f(p2.xvel, p2.yvel));
 
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::Enter)) {
+            start = true;
+            if(firstEnterPress) {
+                clock.restart();
+            }
+            firstEnterPress = false;
+        }
 
         // player 1 controls
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::W)) {
@@ -85,9 +113,6 @@ int main() {
             p1left = false;
         }
 
-        p1.update(p1up, p1down, p1left, p1right);
-
-
         //player 2 controls
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::Up)) {
             p2up = true;
@@ -110,14 +135,14 @@ int main() {
             p2left = false;
         }
 
-        p2.update(p2up, p2down, p2left, p2right);
-
+        if(start) {
+            p1.update(p1up, p1down, p1left, p1right);
+            p2.update(p2up, p2down, p2left, p2right);
+        }
 
 
         // Update the window
         app.display();
-
-        cout << p1.ypos << endl;
 
     }
 

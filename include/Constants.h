@@ -3,5 +3,6 @@
 
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 600;
+const int GROUND_HEIGHT = 500;
 
 #endif // CONSTANTS_H_INCLUDED

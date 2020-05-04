@@ -12,6 +12,7 @@ public:
     float speed;
     enum Direction {UP, DOWN, LEFT, RIGHT};
     Direction dir;
+    bool onGround;
 
     //constructor
     Player();

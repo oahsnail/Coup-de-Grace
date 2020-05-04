@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1588559691 source:a:\desktop s\ctf game\main.cpp
+1588590109 source:a:\desktop s\ctf game\main.cpp
 	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
 	<iostream>
 	"Player.h"
 	"Constants.h"
@@ -518,11 +519,37 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1588559548 source:a:\desktop s\ctf game\src\player.cpp
+1588567346 source:a:\desktop s\ctf game\src\player.cpp
+	<iostream>
 	"Player.h"
 	"Constants.h"
 
-1588555302 a:\desktop s\ctf game\include\player.h
+1588564356 a:\desktop s\ctf game\include\player.h
 
-1588555922 a:\desktop s\ctf game\include\constants.h
+1588564258 a:\desktop s\ctf game\include\constants.h
+
+1588560033 source:a:\desktop s\ctf game\src\platform.cpp
+	"Platform.h"
+
+1588560033 a:\desktop s\ctf game\include\platform.h
+
+1588566466 source:a:\desktop s\coup de grace\main.cpp
+	<SFML/Graphics.hpp>
+	<iostream>
+	"Player.h"
+	"Constants.h"
+
+1588564356 a:\desktop s\coup de grace\include\player.h
+
+1588564258 a:\desktop s\coup de grace\include\constants.h
+
+1588560033 source:a:\desktop s\coup de grace\src\platform.cpp
+	"Platform.h"
+
+1588560033 a:\desktop s\coup de grace\include\platform.h
+
+1588567346 source:a:\desktop s\coup de grace\src\player.cpp
+	<iostream>
+	"Player.h"
+	"Constants.h"
 
