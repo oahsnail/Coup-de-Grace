@@ -1,7 +1,9 @@
 # depslib dependency file v1.0
-1588478457 source:a:\desktop s\ctf game\main.cpp
+1588559691 source:a:\desktop s\ctf game\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
+	"Player.h"
+	"Constants.h"
 
 1525812018 c:\sfml-2.5.1\include\sfml\audio.hpp
 	<SFML/System.hpp>
@@ -515,4 +517,12 @@
 	<SFML/Graphics/PrimitiveType.hpp>
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
+
+1588559548 source:a:\desktop s\ctf game\src\player.cpp
+	"Player.h"
+	"Constants.h"
+
+1588555302 a:\desktop s\ctf game\include\player.h
+
+1588555922 a:\desktop s\ctf game\include\constants.h
 
