@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1588590109 source:a:\desktop s\ctf game\main.cpp
+1588637754 source:a:\desktop s\ctf game\main.cpp
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 	<iostream>
@@ -526,7 +526,7 @@
 
 1588564356 a:\desktop s\ctf game\include\player.h
 
-1588564258 a:\desktop s\ctf game\include\constants.h
+1588637813 a:\desktop s\ctf game\include\constants.h
 
 1588560033 source:a:\desktop s\ctf game\src\platform.cpp
 	"Platform.h"
@@ -552,4 +552,9 @@
 	<iostream>
 	"Player.h"
 	"Constants.h"
+
+1588638925 source:a:\desktop s\ctf game\src\timer.cpp
+	"Timer.h"
+
+1588638876 a:\desktop s\ctf game\include\timer.h
 

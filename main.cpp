@@ -14,7 +14,8 @@ int main() {
 
     bool p1up, p1down, p1left, p1right = false;
     bool p2up, p2down, p2left, p2right = false;
-    bool start = false;
+    bool gameStarted = false;
+    bool gameEnded = false;
     bool firstEnterPress = true;
     sf::Clock clock;
 
@@ -25,12 +26,15 @@ int main() {
     sf::Font agencyFont;
     agencyFont.loadFromFile("data/fonts/AGENCYB.TTF");
 
+    // texts
     sf::Text timerText("timer", agencyFont, 50);
     sf::Text startText("Press Enter to Start", agencyFont, 50);
+    sf::Text timesUpText("Time's Up!", agencyFont, 50);
+    sf::Text declareWinnerText("", agencyFont, 30);
     startText.setPosition(WINDOW_WIDTH/3, WINDOW_HEIGHT/2);
 
-//     initialize positions;
-//     p1 at bottom left, p2 at bottom right
+    // initialize positions;
+    // p1 at bottom left, p2 at bottom right
     p1.xpos = 0;
     p1.ypos = GROUND_HEIGHT;
     p2.xpos = WINDOW_WIDTH-50;
@@ -60,12 +64,20 @@ int main() {
                 app.close();
         }
 
-        if(start == true) {
+        if(gameStarted) {
 
+        // !!!Countdown timer
             sf::Time t = clock.getElapsedTime();
-            string time = to_string(t.asSeconds());
+            string time = to_string(TIME_ALLOWED - t.asSeconds());
             timerText.setString(time);
+            if(t.asSeconds() < 0) {
+                gameEnded = true;
+            }
         }
+        if(gameEnded) {
+
+        }
+
 
 
 
@@ -76,7 +88,7 @@ int main() {
         app.draw(p1Sprite);
         app.draw(p2Sprite);
         app.draw(timerText);
-        if(!start) {
+        if(!gameStarted) {
             app.draw(startText);
         }
 
@@ -84,7 +96,7 @@ int main() {
         p2Sprite.move(sf::Vector2f(p2.xvel, p2.yvel));
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::Enter)) {
-            start = true;
+            gameStarted = true;
             if(firstEnterPress) {
                 clock.restart();
             }
@@ -135,7 +147,7 @@ int main() {
             p2left = false;
         }
 
-        if(start) {
+        if(gameStarted) {
             p1.update(p1up, p1down, p1left, p1right);
             p2.update(p2up, p2down, p2left, p2right);
         }
