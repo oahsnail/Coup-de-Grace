@@ -22,9 +22,10 @@ int main() {
     bool gameEnded = false;
     bool firstEnterPress = true;
 
-    //timer
+    // timer
     Timer timer;
 
+    // fonts
     sf::Font agencyFont;
     agencyFont.loadFromFile("data/fonts/AGENCYB.TTF");
 
@@ -62,10 +63,14 @@ int main() {
     ground.setFillColor(black);
     ground.setPosition(0, GROUND_HEIGHT);
 
+    // players
     Player p1(p1Sprite);
     Player p2(p2Sprite);
+
+    // platforms
     Platform platformLong(WINDOW_WIDTH/2-(platformLongSprite.getLocalBounds().width/2), WINDOW_HEIGHT/2-(platformLongSprite.getLocalBounds().height/2), platformLongSprite);
 
+    Platform platformArr[NUM_PLATFORMS] = {platformLong};
 
     // initialize positions;
     // p1 at bottom left, p2 at bottom right
@@ -118,6 +123,19 @@ int main() {
         }
 
         // Draw stuff
+        if(p1.dir == 2) {
+            p1.sprite.setTextureRect(sf::IntRect(PLAYER_WIDTH, 0, -PLAYER_WIDTH, PLAYER_HEIGHT));
+        }
+        if(p1.dir == 3) {
+            p1.sprite.setTextureRect(sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
+        }
+        if(p2.dir == 2) {
+            p2.sprite.setTextureRect(sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
+        }
+        if(p2.dir == 3) {
+            p2.sprite.setTextureRect(sf::IntRect(PLAYER_WIDTH, 0, -PLAYER_WIDTH, PLAYER_HEIGHT));
+        }
+
         app.draw(p1.sprite);
         app.draw(p2.sprite);
         app.draw(timerText);
@@ -181,13 +199,12 @@ int main() {
         }
 
         if(gameStarted & !gameEnded) {
-            p1.update(p1up, p1down, p1left, p1right);
-            p2.update(p2up, p2down, p2left, p2right);
+            p1.update(p1up, p1down, p1left, p1right, platformArr);
+            p2.update(p2up, p2down, p2left, p2right, platformArr);
         } else {
-            p2.update(false, false, false, false);
-            p1.update(false, false, false, false);
+            p2.update(false, false, false, false, platformArr);
+            p1.update(false, false, false, false, platformArr);
         }
-
 
         // Update the window
         app.display();

@@ -4,8 +4,8 @@
 
 class Platform {
 public:
-    float xvel;
-    float yvel;
+    float xVel;
+    float yVel;
     float xPos;
     float yPos;
     float top;

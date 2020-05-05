@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <SFML/Graphics.hpp>
+#include "Platform.h"
 
 class Player {
 public:
@@ -16,8 +17,9 @@ public:
 
     //constructor
     Player(sf::Sprite s);
-    void update(bool playerUp, bool playerDown, bool playerLeft, bool playerRight);
-    void checkCollision();
+    void update(bool playerUp, bool playerDown, bool playerLeft, bool playerRight, Platform platform[]);
+    void checkBoundaryCollision();
+    void checkPlatformCollision(Platform p);
 };
 
 #endif // PLAYER_H
