@@ -6,8 +6,6 @@ class Platform {
 public:
     float xVel;
     float yVel;
-    float xPos;
-    float yPos;
     float top;
     float bottom;
     float left;

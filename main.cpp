@@ -48,15 +48,22 @@ int main() {
         return EXIT_FAILURE;
     sf::Sprite p2Sprite(p2Texture);
 
-    sf::Texture platformTexture;
-    if (!platformTexture.loadFromFile("data/images/platforms/Platform03.png"))
+    sf::Texture platformLongTexture;
+    if (!platformLongTexture.loadFromFile("data/images/platforms/Platform03.png"))
         return EXIT_FAILURE;
-    sf::Sprite platformLongSprite(platformTexture);
+    sf::Sprite platformLongSprite(platformLongTexture);
+
+    sf::Texture platformShortTexture;
+    if (!platformShortTexture.loadFromFile("data/images/platforms/Platform01.png"))
+        return EXIT_FAILURE;
+    sf::Sprite platformShortSprite(platformShortTexture);
+
+    sf::Texture platformDotTexture;
+    if (!platformDotTexture.loadFromFile("data/images/platforms/Platform05.png"))
+        return EXIT_FAILURE;
+    sf::Sprite platformDotSprite(platformDotTexture);
 
     // shapes
-    sf::RectangleShape background(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
-    sf::Color darkRed(179, 59, 68);
-    background.setFillColor(darkRed);
 
     sf::RectangleShape ground(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT - GROUND_HEIGHT));
     sf::Color black(0, 0, 0);
@@ -69,8 +76,11 @@ int main() {
 
     // platforms
     Platform platformLong(WINDOW_WIDTH/2-(platformLongSprite.getLocalBounds().width/2), WINDOW_HEIGHT/2-(platformLongSprite.getLocalBounds().height/2), platformLongSprite);
+    Platform platformShort(100, 400, platformShortSprite);
+    Platform platformDot(WINDOW_WIDTH-200, 200, platformDotSprite);
+    Platform platformShort2(200, 300, platformShortSprite);
 
-    Platform platformArr[NUM_PLATFORMS] = {platformLong};
+    Platform platformArr[NUM_PLATFORMS] = {platformShort2, platformShort, platformLong};
 
     // initialize positions;
     // p1 at bottom left, p2 at bottom right
@@ -95,12 +105,16 @@ int main() {
         }
 
         // Clear screen
-        app.clear();
+        sf::Color darkRed(179, 59, 68);
+        app.clear(darkRed);
 
         //draw background and platforms
-        app.draw(background);
         app.draw(ground);
-        app.draw(platformLong.image);
+//        app.draw(platformLong.image);
+        for(Platform p : platformArr) {
+            app.draw(p.image);
+
+        }
 
 
         if(gameStarted) {
@@ -177,22 +191,22 @@ int main() {
         }
 
         //player 2 controls
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::Up)) {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::O)) {
             p2up = true;
         } else {
             p2up = false;
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::Down)) {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::L)) {
             p2down = true;
         } else {
             p2down = false;
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::Right)) {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::Semicolon)) {
             p2right = true;
         } else {
             p2right = false;
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::Left)) {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::K)) {
             p2left = true;
         } else {
             p2left = false;

@@ -2,8 +2,6 @@
 
 
 Platform::Platform(float x, float y, sf::Sprite s) {
-    xPos = x;
-    yPos = y;
     image = s;
     image.setPosition(x,y);
     left = image.getPosition().x;

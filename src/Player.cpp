@@ -67,11 +67,11 @@ void Player::checkBoundaryCollision() {
 }
 void Player::checkPlatformCollision(Platform p) {
     if((xPos + PLAYER_WIDTH >= p.left)&(xPos <= p.right)&(yPos + PLAYER_HEIGHT >=  p.top)&(yPos < p.bottom)) {
-        if(yVel > 0 | yVel < 0) {
+        if((yVel > 0) | (yVel < 0)) {
             yPos -= yVel;
             yVel = 0;
         }
-        if(xVel > 0 | xVel < 0) {
+        if((xVel > 0) | (xVel < 0)) {
             xPos -= xVel;
             xVel = 0;
         }
