@@ -2,8 +2,7 @@
 #define PLAYER_H
 
 
-class Player
-{
+class Player {
 public:
     float xvel;
     float yvel;
