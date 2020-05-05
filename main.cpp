@@ -1,7 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <cmath>
+#include <iomanip>
 #include "Player.h"
 #include "Constants.h"
+#include "Timer.h"
 
 using namespace std;
 
@@ -16,7 +19,9 @@ int main() {
     bool gameStarted = false;
     bool gameEnded = false;
     bool firstEnterPress = true;
-    sf::Clock clock;
+
+    //timer
+    Timer timer;
 
 
     Player p1;
@@ -31,6 +36,8 @@ int main() {
     sf::Text timesUpText("Time's Up!", agencyFont, 50);
     sf::Text declareWinnerText("", agencyFont, 30);
     startText.setPosition(WINDOW_WIDTH/3, WINDOW_HEIGHT/2);
+    timesUpText.setPosition(WINDOW_WIDTH/2.5, WINDOW_HEIGHT/2);
+
 
     // initialize positions;
     // p1 at bottom left, p2 at bottom right
@@ -63,25 +70,31 @@ int main() {
                 app.close();
         }
 
-        if(gameStarted) {
-
-        // !!!Countdown timer
-            sf::Time t = clock.getElapsedTime();
-            string time = to_string(TIME_ALLOWED - t.asSeconds());
-            timerText.setString(time);
-            if(t.asSeconds() < 0) {
-                gameEnded = true;
-            }
-        }
-        if(gameEnded) {
-
-        }
-
-
-
-
         // Clear screen
         app.clear();
+
+
+
+        if(gameStarted) {
+
+            // !!!Countdown timer
+            timer.start();
+            if(gameEnded) {
+                timer.pause();
+                timer.pause();
+            }
+            float countdown = TIME_ALLOWED - timer.getElapsedSeconds();
+            string time = to_string(countdown).substr(0,3);
+            timerText.setString(time);
+
+            if(countdown < 0.05) {
+                gameEnded = true;
+                app.draw(timesUpText);
+
+            }
+
+        }
+
 
         // Draw the sprite
         app.draw(p1Sprite);
@@ -97,7 +110,7 @@ int main() {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::Enter)) {
             gameStarted = true;
             if(firstEnterPress) {
-                clock.restart();
+                timer.reset();
             }
             firstEnterPress = false;
         }
@@ -146,9 +159,12 @@ int main() {
             p2left = false;
         }
 
-        if(gameStarted) {
+        if(gameStarted & !gameEnded) {
             p1.update(p1up, p1down, p1left, p1right);
             p2.update(p2up, p2down, p2left, p2right);
+        } else {
+            p1.update(false, false, false, false);
+            p2.update(false, false, false, false);
         }
 
 

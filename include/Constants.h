@@ -4,6 +4,6 @@
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 600;
 const int GROUND_HEIGHT = 500;
-const int TIME_ALLOWED = 60;
+const float TIME_ALLOWED = 5;
 
 #endif // CONSTANTS_H_INCLUDED

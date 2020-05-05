@@ -6,34 +6,34 @@
 using namespace std;
 
 Timer::Timer() {
-    bPaused = false;
+    paused = false;
     runTime = 0;
-    mC.restart();
+    c.restart();
 }
 
 void Timer::reset() {
-    mC.restart();
+    c.restart();
     runTime = 0;
-    bPaused = false;
+    paused = false;
 }
 
 void Timer::start() {
-    if (bPaused) {
-        mC.restart();
+    if (paused) {
+        c.restart();
     }
-    bPaused = false;
+    paused = false;
 }
 
 void Timer::pause() {
-    if (!bPaused) {
-        runTime += mC.getElapsedTime().asSeconds();
+    if (!paused) {
+        runTime += c.getElapsedTime().asSeconds();
     }
-    bPaused = true;
+    paused = true;
 }
 
 float Timer::getElapsedSeconds() {
-    if (!bPaused) {
-        return runTime + mC.getElapsedTime().asSeconds();
+    if (!paused) {
+        return runTime + c.getElapsedTime().asSeconds();
     }
     return runTime;
 }

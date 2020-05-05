@@ -5,9 +5,9 @@
 
 class Timer {
 public:
-    sf::Clock mC;
+    sf::Clock c;
     float runTime;
-    bool bPaused;
+    bool paused;
 
     Timer();
     void reset();
