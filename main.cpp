@@ -3,6 +3,7 @@
 #include <cmath>
 #include <iomanip>
 #include "Player.h"
+#include "Platform.h"
 #include "Constants.h"
 #include "Timer.h"
 
@@ -12,6 +13,7 @@ using namespace std;
 int main() {
     // Create the main window
     sf::RenderWindow app(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Coup de Grace");
+
     app.setFramerateLimit(45);
 
     bool p1up, p1down, p1left, p1right = false;
@@ -23,10 +25,6 @@ int main() {
     //timer
     Timer timer;
 
-
-    Player p1;
-    Player p2;
-
     sf::Font agencyFont;
     agencyFont.loadFromFile("data/fonts/AGENCYB.TTF");
 
@@ -35,16 +33,8 @@ int main() {
     sf::Text startText("Press Enter to Start", agencyFont, 50);
     sf::Text timesUpText("Time's Up!", agencyFont, 50);
     sf::Text declareWinnerText("", agencyFont, 30);
-    startText.setPosition(WINDOW_WIDTH/3, WINDOW_HEIGHT/2);
-    timesUpText.setPosition(WINDOW_WIDTH/2.5, WINDOW_HEIGHT/2);
-
-
-    // initialize positions;
-    // p1 at bottom left, p2 at bottom right
-    p1.xpos = 0;
-    p1.ypos = GROUND_HEIGHT;
-    p2.xpos = WINDOW_WIDTH-50;
-    p2.ypos = GROUND_HEIGHT;
+    startText.setPosition((WINDOW_WIDTH/2)-(startText.getLocalBounds().width/2), (WINDOW_HEIGHT/2)-(startText.getLocalBounds().height));
+    timesUpText.setPosition((WINDOW_WIDTH/2)-(timesUpText.getLocalBounds().width/2), (WINDOW_HEIGHT/2)-(timesUpText.getLocalBounds().height));
 
     // Load a sprite to display
     sf::Texture p1Texture;
@@ -57,8 +47,37 @@ int main() {
         return EXIT_FAILURE;
     sf::Sprite p2Sprite(p2Texture);
 
-    p1Sprite.setPosition(p1.xpos, p1.ypos);
-    p2Sprite.setPosition(p2.xpos, p2.ypos);
+    sf::Texture platformTexture;
+    if (!platformTexture.loadFromFile("data/images/platforms/Platform03.png"))
+        return EXIT_FAILURE;
+    sf::Sprite platformLongSprite(platformTexture);
+
+    // shapes
+    sf::RectangleShape background(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+    sf::Color darkRed(179, 59, 68);
+    background.setFillColor(darkRed);
+
+    sf::RectangleShape ground(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT - GROUND_HEIGHT));
+    sf::Color black(0, 0, 0);
+    ground.setFillColor(black);
+    ground.setPosition(0, GROUND_HEIGHT);
+
+    Player p1(p1Sprite);
+    Player p2(p2Sprite);
+    Platform platformLong(WINDOW_WIDTH/2-(platformLongSprite.getLocalBounds().width/2), WINDOW_HEIGHT/2-(platformLongSprite.getLocalBounds().height/2), platformLongSprite);
+
+
+    // initialize positions;
+    // p1 at bottom left, p2 at bottom right
+    p1.xPos = 0;
+    p1.yPos = GROUND_HEIGHT-PLAYER_HEIGHT;
+    p2.xPos = WINDOW_WIDTH-PLAYER_WIDTH;
+    p2.yPos = GROUND_HEIGHT-PLAYER_HEIGHT;
+
+    p1.sprite.setPosition(p1.xPos, p1.yPos);
+    p2.sprite.setPosition(p2.xPos, p2.yPos);
+
+
 
     // Start the game loop
     while (app.isOpen()) {
@@ -73,6 +92,10 @@ int main() {
         // Clear screen
         app.clear();
 
+        //draw background and platforms
+        app.draw(background);
+        app.draw(ground);
+        app.draw(platformLong.image);
 
 
         if(gameStarted) {
@@ -84,28 +107,26 @@ int main() {
                 timer.pause();
             }
             float countdown = TIME_ALLOWED - timer.getElapsedSeconds();
-            string time = to_string(countdown).substr(0,3);
+            string time = to_string(countdown).substr(0,4);
             timerText.setString(time);
 
-            if(countdown < 0.05) {
+            if(countdown < 0) {
                 gameEnded = true;
                 app.draw(timesUpText);
-
+                timerText.setString("0.00");
             }
-
         }
 
-
-        // Draw the sprite
-        app.draw(p1Sprite);
-        app.draw(p2Sprite);
+        // Draw stuff
+        app.draw(p1.sprite);
+        app.draw(p2.sprite);
         app.draw(timerText);
         if(!gameStarted) {
             app.draw(startText);
         }
 
-        p1Sprite.move(sf::Vector2f(p1.xvel, p1.yvel));
-        p2Sprite.move(sf::Vector2f(p2.xvel, p2.yvel));
+        p1.sprite.move(sf::Vector2f(p1.xVel, p1.yVel));
+        p2.sprite.move(sf::Vector2f(p2.xVel, p2.yVel));
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::Enter)) {
             gameStarted = true;
@@ -163,8 +184,8 @@ int main() {
             p1.update(p1up, p1down, p1left, p1right);
             p2.update(p2up, p2down, p2left, p2right);
         } else {
-            p1.update(false, false, false, false);
             p2.update(false, false, false, false);
+            p1.update(false, false, false, false);
         }
 
 

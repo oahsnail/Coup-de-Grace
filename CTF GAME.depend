@@ -1,10 +1,11 @@
 # depslib dependency file v1.0
-1588649143 source:a:\desktop s\ctf game\main.cpp
+1588667040 source:a:\desktop s\ctf game\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	<cmath>
 	<iomanip>
 	"Player.h"
+	"Platform.h"
 	"Constants.h"
 	"Timer.h"
 
@@ -521,19 +522,21 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1588567346 source:a:\desktop s\ctf game\src\player.cpp
+1588667026 source:a:\desktop s\ctf game\src\player.cpp
 	<iostream>
 	"Player.h"
 	"Constants.h"
 
-1588639731 a:\desktop s\ctf game\include\player.h
+1588663542 a:\desktop s\ctf game\include\player.h
+	<SFML/Graphics.hpp>
 
-1588645346 a:\desktop s\ctf game\include\constants.h
+1588667016 a:\desktop s\ctf game\include\constants.h
 
-1588560033 source:a:\desktop s\ctf game\src\platform.cpp
+1588666260 source:a:\desktop s\ctf game\src\platform.cpp
 	"Platform.h"
 
-1588560033 a:\desktop s\ctf game\include\platform.h
+1588664761 a:\desktop s\ctf game\include\platform.h
+	<SFML/Graphics.hpp>
 
 1588566466 source:a:\desktop s\coup de grace\main.cpp
 	<SFML/Graphics.hpp>
@@ -555,11 +558,11 @@
 	"Player.h"
 	"Constants.h"
 
-1588646426 source:a:\desktop s\ctf game\src\timer.cpp
+1588649343 source:a:\desktop s\ctf game\src\timer.cpp
 	"Timer.h"
 	<iostream>
 	<SFML/Graphics.hpp>
 
-1588646425 a:\desktop s\ctf game\include\timer.h
+1588649343 a:\desktop s\ctf game\include\timer.h
 	<SFML/Graphics.hpp>
 

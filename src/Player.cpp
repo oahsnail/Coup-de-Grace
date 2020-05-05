@@ -5,63 +5,63 @@
 
 using namespace std;
 
-Player::Player() {
-    xvel = 0;
-    yvel = 0;
-    xpos = 0;
-    ypos = 0;
+Player::Player(sf::Sprite s) {
+    xVel = 0;
+    yVel = 0;
     speed = 10;
     onGround = false;
+    sprite = s;
+
 }
 void Player::update(bool playerUp, bool playerDown, bool playerLeft, bool playerRight) {
     if(playerUp) {
         dir = UP;
-        yvel = -speed;
+        yVel = -speed;
     }
     if(playerDown) {
         dir = DOWN;
-        yvel = speed;
+        yVel = speed;
     }
     if((playerUp & playerDown) | (!playerUp & !playerDown)) {
-        yvel = 0;
+        yVel = 0;
     }
     if(playerLeft) {
         dir = LEFT;
-        xvel = -speed;
+        xVel = -speed;
     }
     if(playerRight) {
         dir = RIGHT;
-        xvel = speed;
+        xVel = speed;
     }
     if((playerRight & playerLeft) | (!playerRight & !playerLeft)) {
-        xvel = 0;
+        xVel = 0;
     }
     if(onGround) {
-        yvel = 0;
+        yVel = 0;
         if(playerUp) {
-            yvel = -speed;
+            yVel = -speed;
         }
     }
 
-    xpos += xvel;
-    ypos += yvel;
+    xPos += xVel;
+    yPos += yVel;
     Player::checkCollision();
 
 
 
 }
 void Player::checkCollision() {
-    if((xpos >= WINDOW_WIDTH) | (xpos <= 0)) {
-        xpos -= xvel;
-        xvel = 0;
+    if((xPos >= WINDOW_WIDTH-PLAYER_WIDTH) | (xPos <= 0)) {
+        xPos -= xVel;
+        xVel = 0;
     }
-    if((ypos <= 0)) {
-        ypos -= yvel;
-        yvel = 0;
+    if((yPos <= 0)) {
+        yPos -= yVel;
+        yVel = 0;
     }
-    if(ypos >= GROUND_HEIGHT) {
+    if(yPos >= GROUND_HEIGHT-PLAYER_HEIGHT) {
         onGround = true;
-    } else if(ypos < GROUND_HEIGHT) {
+    } else if(yPos < GROUND_HEIGHT) {
         onGround = false;
     }
 }
