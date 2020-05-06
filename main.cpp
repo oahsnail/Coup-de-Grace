@@ -88,6 +88,7 @@ int main() {
     p1.sprite.setPosition(0, GROUND_HEIGHT-PLAYER_HEIGHT);
     p2.sprite.setPosition(WINDOW_WIDTH-PLAYER_WIDTH, GROUND_HEIGHT-PLAYER_HEIGHT);
 
+    //gravity variables
 
 
     // Start the game loop
