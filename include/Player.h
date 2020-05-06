@@ -7,8 +7,6 @@ class Player {
 public:
     float xVel;
     float yVel;
-    float xPos;
-    float yPos;
     float speed;
     enum Direction {UP, DOWN, LEFT, RIGHT};
     Direction dir;
@@ -19,7 +17,7 @@ public:
     Player(sf::Sprite s);
     void update(bool playerUp, bool playerDown, bool playerLeft, bool playerRight, Platform platform[]);
     void checkBoundaryCollision();
-    void checkPlatformCollision(Platform p);
+    void checkPlatformCollision(float dx, float dy, Platform p);
 };
 
 #endif // PLAYER_H

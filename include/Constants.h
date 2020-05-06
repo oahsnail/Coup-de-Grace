@@ -8,5 +8,6 @@ const unsigned int TIME_ALLOWED = 30;
 const int PLAYER_WIDTH = 50;
 const int PLAYER_HEIGHT = 50;
 const int NUM_PLATFORMS = 3;
+const float margin = 1;
 
 #endif // CONSTANTS_H_INCLUDED

@@ -80,17 +80,13 @@ int main() {
     Platform platformDot(WINDOW_WIDTH-200, 200, platformDotSprite);
     Platform platformShort2(200, 300, platformShortSprite);
 
-    Platform platformArr[NUM_PLATFORMS] = {platformShort2, platformShort, platformLong};
+    Platform platformArr[NUM_PLATFORMS] = {platformShort2, platformLong, platformShort};
 
     // initialize positions;
     // p1 at bottom left, p2 at bottom right
-    p1.xPos = 0;
-    p1.yPos = GROUND_HEIGHT-PLAYER_HEIGHT;
-    p2.xPos = WINDOW_WIDTH-PLAYER_WIDTH;
-    p2.yPos = GROUND_HEIGHT-PLAYER_HEIGHT;
 
-    p1.sprite.setPosition(p1.xPos, p1.yPos);
-    p2.sprite.setPosition(p2.xPos, p2.yPos);
+    p1.sprite.setPosition(0, GROUND_HEIGHT-PLAYER_HEIGHT);
+    p2.sprite.setPosition(WINDOW_WIDTH-PLAYER_WIDTH, GROUND_HEIGHT-PLAYER_HEIGHT);
 
 
 
@@ -156,9 +152,6 @@ int main() {
         if(!gameStarted) {
             app.draw(startText);
         }
-
-        p1.sprite.move(sf::Vector2f(p1.xVel, p1.yVel));
-        p2.sprite.move(sf::Vector2f(p2.xVel, p2.yVel));
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::Enter)) {
             gameStarted = true;
