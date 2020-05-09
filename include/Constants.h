@@ -26,6 +26,6 @@ const float FAST_FALL_SPEED = 25;
 
 //bullet stuff
 const float BULLET_SIZE = 5;
-const float BULLET_SPEED = 10;
+const float BULLET_SPEED = 20;
 
 #endif // CONSTANTS_H_INCLUDED
