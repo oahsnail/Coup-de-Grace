@@ -4,7 +4,7 @@
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 600;
 const int GROUND_HEIGHT = 500;
-const unsigned int TIME_ALLOWED = 10;
+const unsigned int TIME_ALLOWED = 60;
 
 enum Direction {UP, DOWN, LEFT, RIGHT};
 
@@ -14,7 +14,7 @@ const int PLAYER_HEIGHT = 50;
 const int MAX_AMMO_COUNT = 5;
 
 //platform stuff
-const int NUM_PLATFORMS = 5;
+const int NUM_PLATFORMS = 6;
 const float MARGIN = 1;
 
 //gravity stuff
