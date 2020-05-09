@@ -39,6 +39,7 @@ int startGame() {
     sf::Text timesUpText("Time's Up!", agencyFont, 50);
     sf::Text declareP1WinnerText("Player 1 Wins!", agencyFont, 30);
     sf::Text declareP2WinnerText("Player 2 Wins!", agencyFont, 30);
+    sf::Text declareDrawText("Draw!", agencyFont, 30);
     sf::Text restartText("Press Enter to Restart", agencyFont, 30);
 
     timerText.setPosition((WINDOW_WIDTH/2)-(timerText.getLocalBounds().width/2), 0);
@@ -47,6 +48,7 @@ int startGame() {
     restartText.setPosition((WINDOW_WIDTH/2)-(restartText.getLocalBounds().width/2), WINDOW_HEIGHT/2 + 50);
     declareP1WinnerText.setPosition((WINDOW_WIDTH/2)-(declareP1WinnerText.getLocalBounds().width/2), (WINDOW_HEIGHT/2)-(declareP1WinnerText.getLocalBounds().height));
     declareP2WinnerText.setPosition((WINDOW_WIDTH/2)-(declareP2WinnerText.getLocalBounds().width/2), (WINDOW_HEIGHT/2)-(declareP2WinnerText.getLocalBounds().height));
+    declareDrawText.setPosition((WINDOW_WIDTH/2)-(declareDrawText.getLocalBounds().width/2), (WINDOW_HEIGHT/2)-(declareDrawText.getLocalBounds().height));
 
     // Load a sprite to display
     sf::Texture p1Texture;
@@ -150,12 +152,14 @@ int startGame() {
 
         if(p1.isDead | p2.isDead) {
             gameEnded = true;
-            if(p1.isDead) {
+            if(p2.isDead & p1.isDead) {
+                app.draw(declareDrawText);
+            } else if(p1.isDead) {
                 app.draw(declareP2WinnerText);
-            }
-            if(p2.isDead) {
+            } else if(p2.isDead) {
                 app.draw(declareP1WinnerText);
             }
+
 
         }
 
