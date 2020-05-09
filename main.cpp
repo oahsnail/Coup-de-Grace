@@ -23,7 +23,8 @@ int startGame() {
     bool gameStarted = false;
     bool gameEnded = false;
     bool firstEnterPress = true;
-
+    int p1ShootTimer = 0;
+    int p2ShootTimer = 0;
 
     // timer
     Timer timer;
@@ -209,6 +210,7 @@ int startGame() {
 
 
 
+
         // player 1 controls
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::W)) {
             p1up = true;
@@ -230,8 +232,9 @@ int startGame() {
         } else {
             p1left = false;
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::C)) {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::C) & (p1ShootTimer >= SHOOT_TIMER)) {
             p1fireBullet = true;
+            p1ShootTimer = 0;
         } else {
             p1fireBullet = false;
         }
@@ -257,8 +260,9 @@ int startGame() {
         } else {
             p2left = false;
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::BackSlash)) {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::BackSlash) & (p2ShootTimer >= SHOOT_TIMER)) {
             p2fireBullet = true;
+            p2ShootTimer = 0;
         } else {
             p2fireBullet = false;
         }
@@ -292,6 +296,8 @@ int startGame() {
                 }
                 p1.checkBulletCollision(p2.bullets[i]);
             }
+            p1ShootTimer++;
+            p2ShootTimer++;
         }
 
 

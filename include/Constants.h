@@ -12,6 +12,7 @@ enum Direction {UP, DOWN, LEFT, RIGHT};
 const int PLAYER_WIDTH = 50;
 const int PLAYER_HEIGHT = 50;
 const int MAX_AMMO_COUNT = 5;
+const int SHOOT_TIMER = 15;
 
 //platform stuff
 const int NUM_PLATFORMS = 6;

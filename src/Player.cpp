@@ -130,6 +130,8 @@ void Player::checkBulletCollision(Bullet b) {
 }
 
 void Player::shootBullet() {
+
+
     Bullet b(dir, bulletColor);
     b.image.setPosition(sf::Vector2f(sprite.getPosition().x + PLAYER_WIDTH/2, sprite.getPosition().y+PLAYER_HEIGHT/2));
     bullets.push_back(b);
