@@ -2,6 +2,7 @@
 #define BULLET_H
 #include <SFML/Graphics.hpp>
 #include "Constants.h"
+#include "Platform.h"
 
 
 class Bullet {
@@ -28,6 +29,8 @@ public:
     int getTop() {
         return image.getPosition().y;
     }
+
+    bool hittingPlatform(Platform p[]);
 
 
 };

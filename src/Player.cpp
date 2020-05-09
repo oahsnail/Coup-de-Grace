@@ -7,7 +7,8 @@
 
 using namespace std;
 
-Player::Player(sf::Sprite s, Direction initDir) {
+Player::Player(sf::Sprite s, Direction initDir, sf::Color c) {
+    bulletColor = c;
     xVel = 0;
     yVel = 0;
     speed = 10;
@@ -124,7 +125,7 @@ void Player::checkBulletCollision(Bullet b) {
 }
 
 void Player::shootBullet() {
-    Bullet b(dir, sf::Color::White);
+    Bullet b(dir, bulletColor);
     b.image.setPosition(sf::Vector2f(sprite.getPosition().x + PLAYER_WIDTH/2, sprite.getPosition().y+PLAYER_HEIGHT/2));
     bullets.push_back(b);
 }

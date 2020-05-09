@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1588998337 source:a:\desktop s\ctf game\main.cpp
+1589000461 source:a:\desktop s\ctf game\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	<cmath>
@@ -523,14 +523,14 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1588998310 source:a:\desktop s\ctf game\src\player.cpp
+1588999760 source:a:\desktop s\ctf game\src\player.cpp
 	<iostream>
 	"Player.h"
 	"Constants.h"
 	<stdlib.h>
 	<cmath>
 
-1588998384 a:\desktop s\ctf game\include\player.h
+1589000302 a:\desktop s\ctf game\include\player.h
 	<SFML/Graphics.hpp>
 	"Platform.h"
 	"Bullet.h"
@@ -575,7 +575,8 @@
 	"Bullet.h"
 	<iostream>
 
-1588998047 a:\desktop s\ctf game\include\bullet.h
+1589001343 a:\desktop s\ctf game\include\bullet.h
 	<SFML/Graphics.hpp>
 	"Constants.h"
+	"Platform.h"
 

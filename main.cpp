@@ -77,8 +77,8 @@ int main() {
 
 
     // players
-    Player p1(p1Sprite, RIGHT);
-    Player p2(p2Sprite, LEFT);
+    Player p1(p1Sprite, RIGHT, sf::Color::White);
+    Player p2(p2Sprite, LEFT, sf::Color::Black);
 
     // platforms
     Platform platformLong(WINDOW_WIDTH/2-(platformLongSprite.getLocalBounds().width/2), WINDOW_HEIGHT/2-(platformLongSprite.getLocalBounds().height/2), platformLongSprite);
@@ -243,20 +243,29 @@ int main() {
             p2.update(p2up, p2down, p2left, p2right, p2fireBullet, platformArr);
 
             for(size_t i = 0; i < p1.bullets.size(); i++) {
-                if(p1.bullets[i].bulletDir == 3){
+                if(p1.bullets[i].bulletDir == 3) {
                     p1.bullets[i].image.move(BULLET_SPEED, 0);
                 }
-                if(p1.bullets[i].bulletDir == 2){
+                if(p1.bullets[i].bulletDir == 2) {
                     p1.bullets[i].image.move(-BULLET_SPEED, 0);
                 }
-
+                if((p1.bullets[i].image.getPosition().x > WINDOW_WIDTH) |(p1.bullets[i].image.getPosition().x < 0)|(p1.bullets[i].hittingPlatform(platformArr))) {
+                    p1.bullets.erase(p1.bullets.begin() + i );
+                }
                 p2.checkBulletCollision(p1.bullets[i]);
             }
             for(size_t i = 0; i < p2.bullets.size(); i++) {
-                p2.bullets[i].image.move(BULLET_SPEED, 0);
+                if(p2.bullets[i].bulletDir == 3) {
+                    p2.bullets[i].image.move(BULLET_SPEED, 0);
+                }
+                if(p2.bullets[i].bulletDir == 2) {
+                    p2.bullets[i].image.move(-BULLET_SPEED, 0);
+                }
+                if((p2.bullets[i].image.getPosition().x > WINDOW_WIDTH) |(p2.bullets[i].image.getPosition().x < 0)|(p1.bullets[i].hittingPlatform(platformArr))) {
+                    p2.bullets.erase(p2.bullets.begin() + i );
+                }
                 p1.checkBulletCollision(p2.bullets[i]);
             }
-
         }
 
 

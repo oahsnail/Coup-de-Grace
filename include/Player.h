@@ -8,22 +8,18 @@
 
 class Player {
 public:
-    float xVel;
-    float yVel;
-    float speed;
+
     Direction dir;
-    bool onGround;
-    bool onPlatform;
+
     sf::Sprite sprite;
     std::vector<Bullet> bullets;
-    float x;
     bool isDead;
-
+    sf::Color bulletColor;
 
 
 
     //constructor
-    Player(sf::Sprite s, Direction initDir);
+    Player(sf::Sprite s, Direction initDir, sf::Color c);
     void update(bool playerUp, bool playerDown, bool playerLeft, bool playerRight, bool fireBullet, Platform platform[]);
     void checkBoundaryCollision(float dx, float dy);
     void checkPlatformCollision(float dx, float dy, Platform p);
@@ -31,6 +27,13 @@ public:
     void checkFlagCollision();
     void shootBullet();
 
+    private:
+    float xVel;
+    float yVel;
+    float speed;
+    float x;
+    bool onGround;
+    bool onPlatform;
 };
 
 #endif // PLAYER_H
