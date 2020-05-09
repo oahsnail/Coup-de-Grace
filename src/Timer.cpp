@@ -1,6 +1,5 @@
 #include "Timer.h"
 #include <iostream>
-#include <SFML/Graphics.hpp>
 
 
 using namespace std;

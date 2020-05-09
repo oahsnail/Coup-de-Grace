@@ -7,21 +7,23 @@
 
 using namespace std;
 
-Player::Player(sf::Sprite s) {
+Player::Player(sf::Sprite s, Direction initDir) {
     xVel = 0;
     yVel = 0;
     speed = 10;
     onGround = false;
     onPlatform = false;
+    x = GRAVITY_ACCEL_INIT;
     sprite = s;
-    float x = GRAVITY_ACCEL_INIT;
+    isDead = false;
+    dir = initDir;
+
 
 }
-void Player::update(bool playerUp, bool playerDown, bool playerLeft, bool playerRight, Platform platform[]) {
+void Player::update(bool playerUp, bool playerDown, bool playerLeft, bool playerRight, bool fireBullet, Platform platform[]) {
 
     if(playerDown) {
-//        dir = DOWN;
-// !!! implement crouch or speedfall
+        yVel = FAST_FALL_SPEED;
     }
     if(playerLeft) {
         dir = LEFT;
@@ -35,8 +37,7 @@ void Player::update(bool playerUp, bool playerDown, bool playerLeft, bool player
         xVel = 0;
     }
     if(onGround | onPlatform) {
-            x = GRAVITY_ACCEL_INIT;
-//            yVel = speed;
+        x = GRAVITY_ACCEL_INIT;
         if(onGround) {
             yVel = 0;
         }
@@ -46,6 +47,9 @@ void Player::update(bool playerUp, bool playerDown, bool playerLeft, bool player
     } else {
         yVel += (GRAVITY_ACCEL+x);
         x+=GRAVITY_ACCEL;
+    }
+    if(fireBullet) {
+        shootBullet();
     }
 
     onPlatform = false;
@@ -61,9 +65,7 @@ void Player::update(bool playerUp, bool playerDown, bool playerLeft, bool player
         Player::checkPlatformCollision(0, yVel, platform[i]);
     }
     Player::checkBoundaryCollision(0, yVel);
-//    cout <<onGround << onPlatform <<endl;
-//    cout << yVel << endl;
-cout <<x<<endl;
+
 }
 void Player::checkBoundaryCollision(float dx, float dy) {
     int playerX = sprite.getPosition().x;
@@ -108,8 +110,23 @@ void Player::checkPlatformCollision(float dx, float dy, Platform p) {
         if(dx < 0) {
             sprite.setPosition(sf::Vector2f(p.right + MARGIN, playerY));
         }
-
     }
+}
+
+void Player::checkBulletCollision(Bullet b) {
+    int playerX = sprite.getPosition().x;
+    int playerY = sprite.getPosition().y;
+
+    if((b.getRight() > playerX) & (playerX + PLAYER_WIDTH > b.getLeft())& (b.getTop() < playerY + PLAYER_WIDTH) & (b.getBottom() > playerY)) {
+        isDead = true;
+    }
+
+}
+
+void Player::shootBullet() {
+    Bullet b(dir, sf::Color::White);
+    b.image.setPosition(sf::Vector2f(sprite.getPosition().x + PLAYER_WIDTH/2, sprite.getPosition().y+PLAYER_HEIGHT/2));
+    bullets.push_back(b);
 }
 
 void Player::checkFlagCollision() {

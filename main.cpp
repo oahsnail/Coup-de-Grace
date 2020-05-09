@@ -6,6 +6,7 @@
 #include "Platform.h"
 #include "Constants.h"
 #include "Timer.h"
+#include <string>
 
 using namespace std;
 
@@ -18,9 +19,11 @@ int main() {
 
     bool p1up, p1down, p1left, p1right = false;
     bool p2up, p2down, p2left, p2right = false;
+    bool p1fireBullet, p2fireBullet;
     bool gameStarted = false;
     bool gameEnded = false;
     bool firstEnterPress = true;
+
 
     // timer
     Timer timer;
@@ -30,10 +33,11 @@ int main() {
     agencyFont.loadFromFile("data/fonts/AGENCYB.TTF");
 
     // texts
-    sf::Text timerText("timer", agencyFont, 50);
+    sf::Text timerText(to_string(TIME_ALLOWED), agencyFont, 50);
     sf::Text startText("Press Enter to Start", agencyFont, 50);
     sf::Text timesUpText("Time's Up!", agencyFont, 50);
     sf::Text declareWinnerText("", agencyFont, 30);
+    timerText.setPosition((WINDOW_WIDTH/2)-(timerText.getLocalBounds().width/2), 0);
     startText.setPosition((WINDOW_WIDTH/2)-(startText.getLocalBounds().width/2), (WINDOW_HEIGHT/2)-(startText.getLocalBounds().height));
     timesUpText.setPosition((WINDOW_WIDTH/2)-(timesUpText.getLocalBounds().width/2), (WINDOW_HEIGHT/2)-(timesUpText.getLocalBounds().height));
 
@@ -70,25 +74,28 @@ int main() {
     ground.setFillColor(black);
     ground.setPosition(0, GROUND_HEIGHT);
 
+
+
     // players
-    Player p1(p1Sprite);
-    Player p2(p2Sprite);
+    Player p1(p1Sprite, RIGHT);
+    Player p2(p2Sprite, LEFT);
 
     // platforms
     Platform platformLong(WINDOW_WIDTH/2-(platformLongSprite.getLocalBounds().width/2), WINDOW_HEIGHT/2-(platformLongSprite.getLocalBounds().height/2), platformLongSprite);
-    Platform platformShort(100, 400, platformShortSprite);
+    Platform platformShort0(100, 400, platformShortSprite);
     Platform platformDot(WINDOW_WIDTH-200, 200, platformDotSprite);
-    Platform platformShort2(200, 300, platformShortSprite);
+    Platform platformShort1(200, 300, platformShortSprite);
+    Platform platformShort2(WINDOW_WIDTH-200-(platformShortSprite.getLocalBounds().width), 300, platformShortSprite);
+    Platform platformShort3(WINDOW_WIDTH-100-(platformShortSprite.getLocalBounds().width), 400, platformShortSprite);
 
-    Platform platformArr[NUM_PLATFORMS] = {platformShort2, platformLong, platformShort};
+
+    Platform platformArr[NUM_PLATFORMS] = {platformShort0, platformShort1, platformShort2, platformShort3, platformLong,};
 
     // initialize positions;
     // p1 at bottom left, p2 at bottom right
 
     p1.sprite.setPosition(0, GROUND_HEIGHT-PLAYER_HEIGHT);
     p2.sprite.setPosition(WINDOW_WIDTH-PLAYER_WIDTH, GROUND_HEIGHT-PLAYER_HEIGHT);
-
-    //gravity variables
 
 
     // Start the game loop
@@ -107,7 +114,6 @@ int main() {
 
         //draw background and platforms
         app.draw(ground);
-//        app.draw(platformLong.image);
         for(Platform p : platformArr) {
             app.draw(p.image);
 
@@ -116,7 +122,7 @@ int main() {
 
         if(gameStarted) {
 
-            // !!!Countdown timer
+            // Countdown timer
             timer.start();
             if(gameEnded) {
                 timer.pause();
@@ -133,7 +139,14 @@ int main() {
             }
         }
 
+        if(p1.isDead | p2.isDead) {
+            gameEnded = true;
+
+
+        }
+
         // Draw stuff
+        // player turning in direction
         if(p1.dir == 2) {
             p1.sprite.setTextureRect(sf::IntRect(PLAYER_WIDTH, 0, -PLAYER_WIDTH, PLAYER_HEIGHT));
         }
@@ -153,6 +166,15 @@ int main() {
         if(!gameStarted) {
             app.draw(startText);
         }
+
+        for(Bullet b : p2.bullets) {
+            app.draw(b.image);
+        }
+
+        for(Bullet b : p1.bullets) {
+            app.draw(b.image);
+        }
+
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::Enter)) {
             gameStarted = true;
@@ -183,6 +205,11 @@ int main() {
         } else {
             p1left = false;
         }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::C)) {
+            p1fireBullet = true;
+        } else {
+            p1fireBullet = false;
+        }
 
         //player 2 controls
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::O)) {
@@ -205,14 +232,33 @@ int main() {
         } else {
             p2left = false;
         }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Keyboard::BackSlash)) {
+            p2fireBullet = true;
+        } else {
+            p2fireBullet = false;
+        }
 
         if(gameStarted & !gameEnded) {
-            p1.update(p1up, p1down, p1left, p1right, platformArr);
-            p2.update(p2up, p2down, p2left, p2right, platformArr);
-        } else {
-            p2.update(false, false, false, false, platformArr);
-            p1.update(false, false, false, false, platformArr);
+            p1.update(p1up, p1down, p1left, p1right, p1fireBullet, platformArr);
+            p2.update(p2up, p2down, p2left, p2right, p2fireBullet, platformArr);
+
+            for(size_t i = 0; i < p1.bullets.size(); i++) {
+                if(p1.bullets[i].bulletDir == 3){
+                    p1.bullets[i].image.move(BULLET_SPEED, 0);
+                }
+                if(p1.bullets[i].bulletDir == 2){
+                    p1.bullets[i].image.move(-BULLET_SPEED, 0);
+                }
+
+                p2.checkBulletCollision(p1.bullets[i]);
+            }
+            for(size_t i = 0; i < p2.bullets.size(); i++) {
+                p2.bullets[i].image.move(BULLET_SPEED, 0);
+                p1.checkBulletCollision(p2.bullets[i]);
+            }
+
         }
+
 
         // Update the window
         app.display();
@@ -221,3 +267,4 @@ int main() {
 
     return EXIT_SUCCESS;
 }
+

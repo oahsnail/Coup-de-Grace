@@ -8,6 +8,4 @@ Platform::Platform(float x, float y, sf::Sprite s) {
     right = image.getPosition().x + image.getLocalBounds().width;
     top = image.getPosition().y;
     bottom = image.getPosition().y + image.getLocalBounds().height;
-
-
 }

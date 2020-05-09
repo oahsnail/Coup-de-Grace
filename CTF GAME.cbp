@@ -42,11 +42,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="include/Bullet.h" />
 		<Unit filename="include/Constants.h" />
 		<Unit filename="include/Platform.h" />
 		<Unit filename="include/Player.h" />
 		<Unit filename="include/Timer.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Bullet.cpp" />
 		<Unit filename="src/Platform.cpp" />
 		<Unit filename="src/Player.cpp" />
 		<Unit filename="src/Timer.cpp" />
