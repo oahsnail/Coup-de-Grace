@@ -37,6 +37,8 @@ void Player::update(bool playerUp, bool playerDown, bool playerLeft, bool player
     if((playerRight & playerLeft) | (!playerRight & !playerLeft)) {
         xVel = 0;
     }
+
+
     if(onGround | onPlatform) {
         x = GRAVITY_ACCEL_INIT;
         if(onGround) {
@@ -44,6 +46,9 @@ void Player::update(bool playerUp, bool playerDown, bool playerLeft, bool player
         }
         if(playerUp) {
             yVel = -JUMP_HEIGHT;
+        }
+        if(playerUp & playerDown) {
+            yVel = 0;
         }
     } else {
         yVel += (GRAVITY_ACCEL+x);
